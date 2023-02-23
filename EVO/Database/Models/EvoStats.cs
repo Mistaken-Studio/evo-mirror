@@ -1,7 +1,12 @@
-﻿namespace Xname.EVO;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Xname.EVO;
 
 internal sealed class EvoStats
 {
+    [Key]
+    public string UserId { get; set; }
+    
     public int WarheadStart { get; set; }
 
     public int WarheadStop { get; set; }
