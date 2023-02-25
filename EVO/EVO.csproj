@@ -52,6 +52,9 @@
     <Reference Include="Assembly-CSharp-firstpass" HintPath="$(PLUGINAPI_REFERENCES)\Assembly-CSharp-firstpass.dll" />
   </ItemGroup>
   <ItemGroup>
+	<Reference Include="API" HintPath="$(PLUGINAPI_REFERENCES)\0Xname.API.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="EvoStats.cs" />
     <Compile Include="Patches\MicroHIDExecuteServerside.cs" />
     <Compile Include="Plugin.cs" />
