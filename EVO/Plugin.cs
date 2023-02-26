@@ -13,7 +13,7 @@ internal sealed class Plugin
     public static Plugin Instance { get; private set; }
 
     [PluginConfig]
-    public static Config Config;
+    public static Config Config = new();
 
     [PluginPriority(LoadPriority.Medium)]
     [PluginEntryPoint("EVO", "1.0.0", "Bottom text", "Xname")]
@@ -23,22 +23,38 @@ internal sealed class Plugin
         _harmony.PatchAll();
         new StatsCollection();
         System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<EvoDbContext,Configuration>());
-        using var db = new EvoDbContext();
-        Log.Info("chuj");
-        db.Database.CreateIfNotExists();
-        Log.Info("chuj1");
-
-        db.Database.Initialize(false);
-        Log.Info("chuj2");
-
-        db.EvoStats.Add(new EvoStats()
-        {
-            UserId = "test",
-            WarheadStart = 1,
-        });
-        Log.Info("chuj3");
-
-        db.SaveChanges();
+        
+        // using var db = new EvoDbContext();
+        // Log.Info(db.Achievements.Find(1).RequirementFunc.Invoke(new Stats()
+        // {
+        //     Escaped = 2
+        // }).ToString());
+        // Log.Info(db.Achievements.Find(1).RequirementFunc.Invoke(new Stats()
+        // {
+        //     Escaped = 0
+        // }).ToString());
+        // var rarity = db.Rarities.Add(new Rarity()
+        // {
+        //     Name = "Common",
+        //     Color = "white"
+        //
+        // });
+        // var rank = db.Ranks.Add(new Rank()
+        // {
+        //     Name = "Test",
+        //     Rarity = rarity,
+        //
+        // });
+        // var achiv = db.Achievements.Add(new Achievement()
+        // {
+        //     Name = "Test",
+        //     Description = "Test",
+        //     Rank = rank,
+        //     Requirement = "escapes > 1",
+        //     Flags = AchievementFlag.ACTIVE
+        // });
+        // db.SaveChanges();
+        AchievementHandler.UpdateAchievements();
     }
 
     [PluginUnload]

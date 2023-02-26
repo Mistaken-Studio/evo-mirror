@@ -65,6 +65,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Linq.Dynamic.Core, Version=1.2.25.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.Core.1.2.25\lib\net46\System.Linq.Dynamic.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
@@ -101,13 +104,23 @@
     <Reference Include="YamlDotNet" HintPath="$(PLUGINAPI_REFERENCES)\YamlDotNet.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AchievementHandler.cs" />
     <Compile Include="Configs\Config.cs" />
     <Compile Include="Configs\DbConfig.cs" />
     <Compile Include="Database\EvoDbContext.cs" />
-    <Compile Include="Database\Models\EvoStats.cs" />
-    <Compile Include="Migrations\202302231633012_Init.cs" />
-    <Compile Include="Migrations\202302231633012_Init.Designer.cs">
-      <DependentUpon>202302231633012_Init.cs</DependentUpon>
+    <Compile Include="Database\Models\Achievement.cs" />
+    <Compile Include="Database\Models\AchievementFlag.cs" />
+    <Compile Include="Database\Models\Rank.cs" />
+    <Compile Include="Database\Models\RankUnlock.cs" />
+    <Compile Include="Database\Models\Stats.cs" />
+    <Compile Include="Database\Models\Rarity.cs" />
+    <Compile Include="Migrations\202302261430157_Db.cs" />
+    <Compile Include="Migrations\202302261430157_Db.Designer.cs">
+      <DependentUpon>202302261430157_Db.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202302261550051_Rarity.cs" />
+    <Compile Include="Migrations\202302261550051_Rarity.Designer.cs">
+      <DependentUpon>202302261550051_Rarity.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Patches\MicroHIDExecuteServerside.cs" />
@@ -120,8 +133,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202302231633012_Init.resx">
-      <DependentUpon>202302231633012_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202302261430157_Db.resx">
+      <DependentUpon>202302261430157_Db.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302261550051_Rarity.resx">
+      <DependentUpon>202302261550051_Rarity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

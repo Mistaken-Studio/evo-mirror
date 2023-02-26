@@ -26,7 +26,7 @@ namespace Xname.EVO;
 
 internal sealed class StatsCollection
 {
-    public static readonly ConcurrentDictionary<string, EvoStats> PlayerStats = new();
+    public static readonly ConcurrentDictionary<string, Stats> PlayerStats = new();
 
     private static TeslaGate _lastUsedTesla;
     private static Player _scp106;
@@ -54,7 +54,7 @@ internal sealed class StatsCollection
     [PluginEvent(ServerEventType.RoundEnd)]
     private void OnRoundEnd(RoundSummary.LeadingTeam leadingTeam)
     {
-        Task.Run(() =>
+        Task.Run(async () =>
         {
             foreach (Player player in Player.GetPlayers())
             {
@@ -157,16 +157,28 @@ internal sealed class StatsCollection
 
                 Log.Info("---------------------------------------------------------");
 #endif
+                stat.Value.UserId = stat.Key;
+                await AchievementHandler.SaveStatsAndUnlock(stat.Value);
             }
 
             // send them here
+            
         });
     }
 
     [PluginEvent(ServerEventType.PlayerJoined)]
     private void OnPlayerJoined(Player player)
     {
-        PlayerStats.TryAdd(player.UserId, new());
+        if(!player.DoNotTrack)
+            PlayerStats.TryAdd(player.UserId, new());
+
+        var rank = AchievementHandler.GetUserRank(player.UserId);
+        if (rank != null)
+        {
+            player.ReferenceHub.serverRoles.SetText(rank.Name);
+            player.ReferenceHub.serverRoles.SetColor(rank.Color ?? rank.Rarity.Color); //rank.Rarity.Color;
+            Log.Info($"Set rank for {player.Nickname} to {rank.Name} ({rank.Color}) ({rank.Rarity.Name})");
+        }
     }
 
     [PluginEvent(ServerEventType.PlayerLeft)]
