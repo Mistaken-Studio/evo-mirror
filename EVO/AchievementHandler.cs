@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using PluginAPI.Core;
-//using System.Linq.Dynamic.Core;
+using System.Linq.Dynamic.Core;
 using Xname.EVO.Database;
+using FMOD.Studio;
+using Discord;
 
 namespace Xname.EVO;
 
@@ -36,7 +37,7 @@ public class AchievementHandler
     internal static async Task SaveStatsAndUnlock(Stats stats)
     {
         using var db = new EvoDbContext();
-        var ranks = db.RankUnlocks.Where(x=>x.UserId == stats.UserId).Select(x=>x.Rank).AsNoTracking().ToList();
+        var ranks = db.RankUnlocks.Include(x => x.Rank).Where(x => x.UserId == stats.UserId).Select(x => x.Rank).AsNoTracking().ToList();
         var statsDb = db.Stats.FirstOrDefault(x=>x.UserId == stats.UserId);
         if (statsDb == null)
         {
@@ -44,10 +45,9 @@ public class AchievementHandler
             db.Stats.Add(statsDb);
         }
         else
-        {
             statsDb.AddStats(stats);
-        }
-        foreach (Achievement achievement in _achievements.Where(x=> !ranks.Contains(x.Rank)))
+
+        foreach (Achievement achievement in _achievements.Where(x => !ranks.Contains(x.Rank)))
         {
             if (achievement.RequirementFunc.Invoke(achievement.InOneRound ? stats : statsDb))
             {
@@ -59,15 +59,28 @@ public class AchievementHandler
                 });
             }
         }
+
         await db.SaveChangesAsync();
     }
-    
-    internal static Rank GetUserRank(string userId)
+
+    internal static void RefreshRank(Player player)
     {
         using var db = new EvoDbContext();
-        return db.RankUnlocks.Include(x=>x.Rank).Where(x=>x.UserId == userId).OrderByDescending(x=>x.Rank.Id).Select(x=>x.Rank).Include(x=>x.Rarity).AsNoTracking().FirstOrDefault();
+        Log.Debug("1");
+        var rank = db.RankPreferences.Include(x => x.Rank).Where(x => x.UserId == player.UserId).Select(x => x.Rank).Include(x => x.Rarity).AsNoTracking().FirstOrDefault();
+        Log.Debug("2");
+        rank ??= db.RankUnlocks.Include(x => x.Rank).Where(x => x.UserId == player.UserId).Select(x => x.Rank).Include(x => x.Rarity).OrderByDescending(x => x.Rarity.Id).AsNoTracking().FirstOrDefault();
+        Log.Debug("3");
+        if (rank == null)
+            return;
+
+        Log.Debug("4");
+        player.ReferenceHub.serverRoles.SetText(rank.Name);
+        Log.Debug("5");
+        player.ReferenceHub.serverRoles.SetColor(rank.Color ?? rank.Rarity.Color);
+        Log.Debug($"Set rank for {player.Nickname} to {rank.Name} ({rank.Color}) ({rank.Rarity.Name})", Plugin.Config.Debug);
     }
-    
+
     private static readonly List<Achievement> _achievements = new();
     private static readonly ParsingConfig _config = new();
 }

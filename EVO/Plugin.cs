@@ -1,6 +1,5 @@
 ﻿using System.Data.Entity;
 using HarmonyLib;
-using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
 using Xname.EVO.Database;

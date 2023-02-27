@@ -9,5 +9,4 @@ public enum AchievementFlag
     ACTIVE = 1,
     ONLY_TITLE = 2,
     SECRET = 4,
-
 }

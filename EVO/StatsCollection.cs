@@ -160,25 +160,16 @@ internal sealed class StatsCollection
                 stat.Value.UserId = stat.Key;
                 await AchievementHandler.SaveStatsAndUnlock(stat.Value);
             }
-
-            // send them here
-            
         });
     }
 
     [PluginEvent(ServerEventType.PlayerJoined)]
     private void OnPlayerJoined(Player player)
     {
-        if(!player.DoNotTrack)
+        if (!player.DoNotTrack)
             PlayerStats.TryAdd(player.UserId, new());
 
-        var rank = AchievementHandler.GetUserRank(player.UserId);
-        if (rank != null)
-        {
-            player.ReferenceHub.serverRoles.SetText(rank.Name);
-            player.ReferenceHub.serverRoles.SetColor(rank.Color ?? rank.Rarity.Color); //rank.Rarity.Color;
-            Log.Info($"Set rank for {player.Nickname} to {rank.Name} ({rank.Color}) ({rank.Rarity.Name})");
-        }
+        AchievementHandler.RefreshRank(player);
     }
 
     [PluginEvent(ServerEventType.PlayerLeft)]

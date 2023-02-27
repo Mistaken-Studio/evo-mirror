@@ -111,9 +111,11 @@
     <Compile Include="Database\Models\Achievement.cs" />
     <Compile Include="Database\Models\AchievementFlag.cs" />
     <Compile Include="Database\Models\Rank.cs" />
+    <Compile Include="Database\Models\RankPreference.cs" />
     <Compile Include="Database\Models\RankUnlock.cs" />
     <Compile Include="Database\Models\Stats.cs" />
     <Compile Include="Database\Models\Rarity.cs" />
+    <Compile Include="EvoCommand.cs" />
     <Compile Include="Migrations\202302261430157_Db.cs" />
     <Compile Include="Migrations\202302261430157_Db.Designer.cs">
       <DependentUpon>202302261430157_Db.cs</DependentUpon>
@@ -125,6 +127,10 @@
     <Compile Include="Migrations\202302271452358_InOneRound.cs" />
     <Compile Include="Migrations\202302271452358_InOneRound.Designer.cs">
       <DependentUpon>202302271452358_InOneRound.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202302272124095_Preferences.cs" />
+    <Compile Include="Migrations\202302272124095_Preferences.designer.cs">
+      <DependentUpon>202302272124095_Preferences.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Patches\MicroHIDExecuteServerside.cs" />
@@ -145,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202302271452358_InOneRound.resx">
       <DependentUpon>202302271452358_InOneRound.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302272124095_Preferences.resx">
+      <DependentUpon>202302272124095_Preferences.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
