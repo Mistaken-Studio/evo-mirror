@@ -191,7 +191,7 @@ internal sealed class Stats
 
     public int SCP049Revived { get; set; }
 
-    public int SCP173NecksSnaped { get; set; }
+    public int SCP173NecksSnapped { get; set; }
 
     public int ItemsPickedUp { get; set; }
 
@@ -311,7 +311,7 @@ internal sealed class Stats
         PocketEscapes += stats.PocketEscapes;
         SCP106Captured += stats.SCP106Captured;
         SCP049Revived += stats.SCP049Revived;
-        SCP173NecksSnaped += stats.SCP173NecksSnaped;
+        SCP173NecksSnapped += stats.SCP173NecksSnapped;
         ItemsPickedUp += stats.ItemsPickedUp;
         Deaths += stats.Deaths;
         DoorsOpened += stats.DoorsOpened;

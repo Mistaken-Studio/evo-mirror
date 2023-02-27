@@ -504,7 +504,7 @@ internal sealed class StatsCollection
                 if (attacker is not null && PlayerStats.TryGetValue(attacker.UserId, out value))
                 {
                     if (attacker.Role == RoleTypeId.Scp173)
-                        value.SCP173NecksSnaped++;
+                        value.SCP173NecksSnapped++;
 
                     if (target == attacker)
                         return;

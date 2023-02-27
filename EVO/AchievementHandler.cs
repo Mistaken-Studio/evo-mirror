@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using PluginAPI.Core;
 //using System.Linq.Dynamic.Core;
 using Xname.EVO.Database;
 
@@ -17,9 +18,19 @@ public class AchievementHandler
         using var db = new EvoDbContext();
         foreach (Achievement achievement in db.Achievements.Include(x=>x.Rank).AsNoTracking())
         {
-            achievement.RequirementFunc = achievement.Requirement != null ? DynamicExpressionParser.ParseLambda<Stats, bool>(_config, false, achievement.Requirement).Compile() : _ => true;
-            _achievements.Add(achievement);
+            try
+            {
+                achievement.RequirementFunc = achievement.Requirement != null ? DynamicExpressionParser.ParseLambda<Stats, bool>(_config, false, achievement.Requirement).Compile() : _ => true;
+                _achievements.Add(achievement);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Failed to parse requirement for achievement {achievement.Name} ({achievement.Id})");
+                Log.Error(achievement.Requirement);
+                Log.Error(e.Message);
+            }
         }
+        Log.Info($"Successfully loaded {_achievements.Count} achievements");
     }
 
     internal static async Task SaveStatsAndUnlock(Stats stats)

@@ -122,6 +122,10 @@
     <Compile Include="Migrations\202302261550051_Rarity.Designer.cs">
       <DependentUpon>202302261550051_Rarity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202302271452358_InOneRound.cs" />
+    <Compile Include="Migrations\202302271452358_InOneRound.Designer.cs">
+      <DependentUpon>202302271452358_InOneRound.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Patches\MicroHIDExecuteServerside.cs" />
     <Compile Include="Plugin.cs" />
@@ -139,6 +143,12 @@
     <EmbeddedResource Include="Migrations\202302261550051_Rarity.resx">
       <DependentUpon>202302261550051_Rarity.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302271452358_InOneRound.resx">
+      <DependentUpon>202302271452358_InOneRound.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Database\pog.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
