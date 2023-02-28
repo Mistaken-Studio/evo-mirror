@@ -21,4 +21,9 @@ internal sealed class EvoDbContext : DbContext
     public EvoDbContext() : base(Plugin.Config.Database.ConnectionString)
     {
     }
+
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+    }
 }

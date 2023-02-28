@@ -10,7 +10,7 @@ namespace Xname.EVO.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
     } 
 }

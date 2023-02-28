@@ -3,10 +3,73 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Db : DbMigration
+    public partial class Init : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Achievements",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(unicode: false),
+                        Description = c.String(unicode: false),
+                        Requirement = c.String(unicode: false),
+                        Flags = c.Int(nullable: false),
+                        InOneRound = c.Boolean(nullable: false),
+                        Rank_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Ranks", t => t.Rank_Id)
+                .Index(t => t.Rank_Id);
+            
+            CreateTable(
+                "dbo.Ranks",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(unicode: false),
+                        Color = c.String(unicode: false),
+                        Rarity_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Rarities", t => t.Rarity_Id)
+                .Index(t => t.Rarity_Id);
+            
+            CreateTable(
+                "dbo.Rarities",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(unicode: false),
+                        Color = c.String(unicode: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.RankPreferences",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128, storeType: "nvarchar"),
+                        RankId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.UserId)
+                .ForeignKey("dbo.Ranks", t => t.RankId, cascadeDelete: true)
+                .Index(t => t.RankId);
+            
+            CreateTable(
+                "dbo.RankUnlocks",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        UserId = c.String(unicode: false),
+                        RankId = c.Int(nullable: false),
+                        TimeUnlocked = c.DateTime(nullable: false, precision: 0),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Ranks", t => t.RankId, cascadeDelete: true)
+                .Index(t => t.RankId);
+            
             CreateTable(
                 "dbo.Stats",
                 c => new
@@ -104,7 +167,7 @@
                         PocketEscapes = c.Int(nullable: false),
                         SCP106Captured = c.Int(nullable: false),
                         SCP049Revived = c.Int(nullable: false),
-                        SCP173NecksSnaped = c.Int(nullable: false),
+                        SCP173NecksSnapped = c.Int(nullable: false),
                         ItemsPickedUp = c.Int(nullable: false),
                         Deaths = c.Int(nullable: false),
                         DoorsOpened = c.Int(nullable: false),
@@ -120,72 +183,24 @@
                     })
                 .PrimaryKey(t => t.UserId);
             
-            CreateTable(
-                "dbo.Achievements",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(unicode: false),
-                        Description = c.String(unicode: false),
-                        Requirement = c.String(unicode: false),
-                        Flags = c.Int(nullable: false),
-                        Rank_Id = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Ranks", t => t.Rank_Id)
-                .Index(t => t.Rank_Id);
-            
-            CreateTable(
-                "dbo.Ranks",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(unicode: false),
-                        Color = c.String(unicode: false),
-                        Rarity_Id = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Rarities", t => t.Rarity_Id)
-                .Index(t => t.Rarity_Id);
-            
-            CreateTable(
-                "dbo.Rarities",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(unicode: false),
-                        Color = c.String(unicode: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.RankUnlocks",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        UserId = c.String(unicode: false),
-                        TimeUnlocked = c.DateTime(nullable: false, precision: 0),
-                        Rank_Id = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Ranks", t => t.Rank_Id)
-                .Index(t => t.Rank_Id);
-            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.RankUnlocks", "Rank_Id", "dbo.Ranks");
+            DropForeignKey("dbo.RankUnlocks", "RankId", "dbo.Ranks");
+            DropForeignKey("dbo.RankPreferences", "RankId", "dbo.Ranks");
             DropForeignKey("dbo.Achievements", "Rank_Id", "dbo.Ranks");
             DropForeignKey("dbo.Ranks", "Rarity_Id", "dbo.Rarities");
-            DropIndex("dbo.RankUnlocks", new[] { "Rank_Id" });
+            DropIndex("dbo.RankUnlocks", new[] { "RankId" });
+            DropIndex("dbo.RankPreferences", new[] { "RankId" });
             DropIndex("dbo.Ranks", new[] { "Rarity_Id" });
             DropIndex("dbo.Achievements", new[] { "Rank_Id" });
+            DropTable("dbo.Stats");
             DropTable("dbo.RankUnlocks");
+            DropTable("dbo.RankPreferences");
             DropTable("dbo.Rarities");
             DropTable("dbo.Ranks");
             DropTable("dbo.Achievements");
-            RenameTable(name: "dbo.Stats", newName: "EvoStats");
         }
     }
 }

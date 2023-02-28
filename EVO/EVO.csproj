@@ -108,6 +108,7 @@
     <Compile Include="Configs\Config.cs" />
     <Compile Include="Configs\DbConfig.cs" />
     <Compile Include="Database\EvoDbContext.cs" />
+    <Compile Include="Database\EvoDbInitializer.cs" />
     <Compile Include="Database\Models\Achievement.cs" />
     <Compile Include="Database\Models\AchievementFlag.cs" />
     <Compile Include="Database\Models\Rank.cs" />
@@ -116,21 +117,9 @@
     <Compile Include="Database\Models\Stats.cs" />
     <Compile Include="Database\Models\Rarity.cs" />
     <Compile Include="EvoCommand.cs" />
-    <Compile Include="Migrations\202302261430157_Db.cs" />
-    <Compile Include="Migrations\202302261430157_Db.Designer.cs">
-      <DependentUpon>202302261430157_Db.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202302261550051_Rarity.cs" />
-    <Compile Include="Migrations\202302261550051_Rarity.Designer.cs">
-      <DependentUpon>202302261550051_Rarity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202302271452358_InOneRound.cs" />
-    <Compile Include="Migrations\202302271452358_InOneRound.Designer.cs">
-      <DependentUpon>202302271452358_InOneRound.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202302272124095_Preferences.cs" />
-    <Compile Include="Migrations\202302272124095_Preferences.designer.cs">
-      <DependentUpon>202302272124095_Preferences.cs</DependentUpon>
+    <Compile Include="Migrations\202302282218579_Init.cs" />
+    <Compile Include="Migrations\202302282218579_Init.Designer.cs">
+      <DependentUpon>202302282218579_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Patches\MicroHIDExecuteServerside.cs" />
@@ -143,21 +132,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202302261430157_Db.resx">
-      <DependentUpon>202302261430157_Db.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202302261550051_Rarity.resx">
-      <DependentUpon>202302261550051_Rarity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202302271452358_InOneRound.resx">
-      <DependentUpon>202302271452358_InOneRound.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202302272124095_Preferences.resx">
-      <DependentUpon>202302272124095_Preferences.cs</DependentUpon>
-    </EmbeddedResource>
+    <Content Include="Database\pog.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database\pog.sql" />
+    <EmbeddedResource Include="Migrations\202302282218579_Init.resx">
+      <DependentUpon>202302282218579_Init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

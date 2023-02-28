@@ -91,9 +91,9 @@ internal sealed class EvoCommand : ICommand
 
         var preference = _context.RankPreferences.Where(x => x.UserId == player.UserId).FirstOrDefault();
         if (preference is null)
-            _context.RankPreferences.Add(new() { UserId = player.UserId, Rank = rank.Rank });
+            _context.RankPreferences.Add(new() { UserId = player.UserId, RankId = rank.Rank.Id });
         else
-            preference.Rank = rank.Rank;
+            preference.RankId = rank.Rank.Id;
 
         _context.SaveChanges();
         AchievementHandler.RefreshRank(player);

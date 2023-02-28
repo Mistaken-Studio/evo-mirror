@@ -1,5 +1,7 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using HarmonyLib;
+using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
 using Xname.EVO.Database;
@@ -21,8 +23,16 @@ internal sealed class Plugin
         Instance = this;
         _harmony.PatchAll();
         new StatsCollection();
-        System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<EvoDbContext,Configuration>());
-        
+        try
+        {
+            System.Data.Entity.Database.SetInitializer(
+                new MigrateDatabaseToLatestVersion<EvoDbContext, Configuration>());
+        }
+        catch (Exception e)
+        {
+            Log.Error(e.Message);
+        }
+
         // using var db = new EvoDbContext();
         // Log.Info(db.Achievements.Find(1).RequirementFunc.Invoke(new Stats()
         // {

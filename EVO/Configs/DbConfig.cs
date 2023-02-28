@@ -15,5 +15,5 @@ internal sealed class DbConfig
     public string Password { get; set; } = "evo";
     
     [YamlIgnore]
-    public string ConnectionString => $"Server={Host};Port={Port};Database={Database};Uid={Username};Pwd={Password};";
+    public string ConnectionString => $"Server={Host};Port={Port};Database={Database};Uid={Username};Pwd={Password};Allow User Variables=True";
 }
