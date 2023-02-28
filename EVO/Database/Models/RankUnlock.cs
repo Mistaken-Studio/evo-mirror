@@ -2,7 +2,7 @@
 
 namespace Xname.EVO;
 
-public class RankUnlock
+public sealed class RankUnlock
 {
     public int Id { get; set; }
     

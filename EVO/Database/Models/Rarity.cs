@@ -2,7 +2,7 @@
 
 namespace Xname.EVO;
 
-public class Rarity
+public sealed class Rarity
 {
     [Key]
     public int Id { get; set; }

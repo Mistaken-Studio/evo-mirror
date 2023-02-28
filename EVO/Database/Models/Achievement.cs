@@ -1,11 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq.Dynamic.Core;
 
 namespace Xname.EVO;
-
-public class Achievement
+public sealed class Achievement
 {
     [Key]
     public int Id { get; set; }
@@ -23,5 +21,5 @@ public class Achievement
     public bool InOneRound { get; set; }
     
     [NotMapped]
-    internal Func<Stats,bool> RequirementFunc { get; set; }
+    internal Func<Stats, bool> RequirementFunc { get; set; }
 }
