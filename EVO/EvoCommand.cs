@@ -60,11 +60,11 @@ internal sealed class EvoCommand : ICommand
     }
 
     private const string Usage = "\n.evo refresh (alias 'r')\n.evo show\n.evo set [Rank Id]";
-
-    private static readonly EvoDbContext _context = new();
+    
 
     private static void Show(Player player)
     {
+        using var _context = new EvoDbContext();
         StringBuilder sb = new();
         var ranks = _context.RankUnlocks.Include(x => x.Rank).Where(x => x.UserId == player.UserId).OrderByDescending(x => x.Rank.Id).AsNoTracking().ToArray();
 
@@ -82,6 +82,7 @@ internal sealed class EvoCommand : ICommand
 
     private static void Set(Player player, int id)
     {
+        using var _context = new EvoDbContext();
         var rank = _context.RankUnlocks.Include(x => x.Rank).Where(x => x.UserId == player.UserId && x.Rank.Id == id).AsNoTracking().FirstOrDefault();
         if (rank is null)
         {
