@@ -1,40 +1,783 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
+using GameCore;
+using Xname.EVO.Migrations;
+using Log = PluginAPI.Core.Log;
 
 namespace Xname.EVO.Database;
 
-internal class EvoDbInitializer : CreateDatabaseIfNotExists<EvoDbContext>
+internal class EvoDbInitializer : MigrateDatabaseToLatestVersion<EvoDbContext, Configuration>
 {
-    protected override void Seed(EvoDbContext context)
+    protected void Seed(EvoDbContext context)
     {
         var rarities = new List<Rarity>();
         var ranks = new List<Rank>();
         var achievements = new List<Achievement>();
-        
-        rarities.Add(new Rarity()
+
+        rarities.Add(new Rarity
         {
             Color = "nickel",
             Name = "Common"
         });
-        rarities.Add(new Rarity()
+        rarities.Add(new Rarity
         {
             Color = "nickel",
             Name = "Uncommon"
         });
-        rarities.Add(new Rarity()
+        rarities.Add(new Rarity
         {
             Color = "orange",
             Name = "Rare"
         });
-        rarities.Add(new Rarity()
+        rarities.Add(new Rarity
         {
             Color = "carmine",
             Name = "Legendary"
         });
-        rarities.Add(new Rarity()
+        rarities.Add(new Rarity
         {
             Color = "crimson",
             Name = "Secret"
+        });
+
+        ranks.Add(new Rank
+        {
+            Name = "Lab Technician",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Project Director",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Junior Researcher",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Contaminated",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Employee of the Month",
+            Rarity = rarities[2]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Foundation Astronaut",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Veteran",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Breach Technician",
+            Rarity = rarities[2]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Death's Designer",
+            Rarity = rarities[2]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "MTF-Nu-7 'Hammer Down'",
+            Rarity = rarities[2]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "O5-1",
+            Rarity = rarities[3]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Master of Disaster",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Nuclear Engineer",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Freedom Runner",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Terrorist",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Recruit",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Steady Hand",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Special Force",
+            Rarity = rarities[2]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "GOC Agent",
+            Rarity = rarities[2]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Civilian Casualty",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Chaotic Soldier",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Fugative",
+            Rarity = rarities[2]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Delta Commander",
+            Rarity = rarities[3]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Reality Bender",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Plague Doctor",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Windows Enjoyer",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Necromancy Overlord",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Peanut",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Old Man",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Brainless Humanoid",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "The Gatekeeper",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Saboteur",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "The Escapee",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Decommissioned",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Judgement Day",
+            Rarity = rarities[2]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Mad Scientist",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Incident Omega",
+            Rarity = rarities[2]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "The Scarlet King",
+            Rarity = rarities[3]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Revenge Seeker",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Good Patient",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Ascended",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Police Officer",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Celebrity",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Electrician",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Border Guard",
+            Rarity = rarities[0]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Pro Player",
+            Rarity = rarities[2]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "SCP-MISTAKEN",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Hoarder",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Type Green",
+            Rarity = rarities[1]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Council of Liars",
+            Rarity = rarities[2]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Four-Leafed Clover",
+            Rarity = rarities[2]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "A New World",
+            Rarity = rarities[3]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Doctor Darling",
+            Rarity = rarities[3]
+        });
+        ranks.Add(new Rank
+        {
+            Name = "Fritz Williams 'The Administrator'",
+            Rarity = rarities[4]
+        });
+
+        achievements.Add(new Achievement
+        {
+            Name = "SCP-914 Testing",
+            Description = "Użyj SCP-914 250 razy",
+            Requirement = "Used914 > 249",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[0]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "SCIENCE!",
+            Description = "Zagraj jako naukowiec 50 rund",
+            Requirement = "PlayedClass6 > 49",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[1]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Noble Scientist",
+            Description = "Użyj SCP-500, SCP-268, SCP-207 lub jakiegokolwiek SCP-330 100 razy łącznie",
+            Requirement = "(Used500 + Used268 + Used207 + Used330) > 99",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[2]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "5, 4, 3, 2, 1",
+            Description = "Zgiń od dekontaminacji 20 razy",
+            Requirement = "KIlledByDecontamination > 19",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[3]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Experiment Alpha",
+            Description = "Użyj MicroHID 30 razy",
+            Requirement = "UsedMicrohid > 29",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[35]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Professional Foundation Employee",
+            Description = "Zabij 50 podmiotów SCP (wyłączając SCP-049-2)",
+            Requirement =
+                "(KilledClass0 + KilledClass3 + KilledClass5 + KilledClass7 + KilledClass9 + KilledClass16) > 49",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[4]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "AAAAAAAAAAAAAAA",
+            Description = "Zgiń od upadku 50 razy",
+            Requirement = " KilledByFalldown > 49",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[5]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Yessir!",
+            Description = "Poprowadź jednostkę MTF jako kapitan 60 razy",
+            Requirement = "PlayedClass12 > 59",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[6]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Site-02 Maintenance Department",
+            Description = "Aktywuj wszystkie generatory w jednej rundzie",
+            Requirement = "GeneratorActivated > 2",
+            Flags = (AchievementFlag)3,
+            InOneRound = false,
+            Rank = ranks[7]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Groundhog Day",
+            Description = "Zgiń od dekontaminacji LCZ, upadku, SCP-207, i od eksplozji głowicy alfa w jednej rundzie",
+            Requirement =
+                "KilledByDecontamination > 0 &&  KilledByFalldown > 0 && KilledBySCP207 > 0 && KilledByNuke > 0",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[8]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Command, target is secure",
+            Description = "Zadaj 100000 obrażeń podmiotom SCP",
+            Requirement = "DamageDoneToSCPS > 99999",
+            Flags = (AchievementFlag)7,
+            InOneRound = false,
+            Rank = ranks[9]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "We are cold, not cruel",
+            Description = "Odblokuj wszystkie Osiągnięcia Fundacji",
+            Requirement = "true",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[10]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "The Red Button",
+            Description = "Uruchom głowicę alfa 75 razy",
+            Requirement = "WarheadStart > 74",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[11]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "What the f*** are you guys doing?",
+            Description = "Anuluj proces detonacji głowicy alfa 75 razy",
+            Requirement = "WarheadStop > 74",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[12]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "RUN!",
+            Description = "Ucieknij 75 razy",
+            Requirement = "Escaped > 74",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[13]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Convicted ",
+            Description = "Zagraj jako klasa D 150 razy",
+            Requirement = "PlayedClass1 > 149",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[14]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Chaos, CHAOS!",
+            Description = "Odrodź się jako agent Rebelii Chaosu 50 razy",
+            Requirement = "(PlayedClass8 + PlayedClass18 + PlayedClass19 + PlayedClass20) > 49",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[15]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Lethal Rifleman",
+            Description = "Traf 500 strzałów w głowę",
+            Requirement = "Headshots > 499",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[16]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Destroy Destroy Destroy",
+            Description = "abij 3 podmioty SCP (poza 049-2) w jednej rundzie",
+            Requirement =
+                "(KilledClass0 + KilledClass3 + KilledClass5 + KilledClass7 + KilledClass9 + KilledClass16) > 2",
+            Flags = (AchievementFlag)3,
+            InOneRound = false,
+            Rank = ranks[18]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Feel the PAIN!",
+            Description = "Otrzymaj 75000 punktów obrażeń",
+            Requirement = "DamageTaken > 74999",
+            Flags = (AchievementFlag)3,
+            InOneRound = false,
+            Rank = ranks[19]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Chaotic Da Vinci",
+            Description = "Odródź się jako każdy agent Rebelii Chaosu 15 razy",
+            Requirement = "PlayedClass8 > 14 && PlayedClass18 > 14 && PlayedClass19 > 14 && PlayedClass20 > 14",
+            Flags = (AchievementFlag)7,
+            InOneRound = false,
+            Rank = ranks[20]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "War Criminal",
+            Description = "Zabij 10 osób w jednej rundzie jako człowiek",
+            Requirement =
+                "(KilledClass1 + KilledClass4 + KilledClass6 + KilledClass8 + KilledClass11 + KilledClass12 + KilledClass13 + KilledClass15 + KilledClass18 + KilledClass19 + KilledClass20) > 9",
+            Flags = (AchievementFlag)7,
+            InOneRound = false,
+            Rank = ranks[21]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Traitor from Alpha-1",
+            Description = "-",
+            Requirement = "true",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[22]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Serpent's Hand Friends",
+            Description = "Odródź się jako podmiot SCP (oprócz 049-2) 50 razy",
+            Requirement =
+                "(PlayedClass0 + PlayedClass3 + PlayedClass5 + PlayedClass7 + PlayedClass9 + PlayedClass16) > 49",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[23]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "I am the Cure",
+            Description = "Wskrześ 100 graczy jako SCP-049",
+            Requirement = "SCP049Revived > 99",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[24]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Linux Bad",
+            Description = "Zdobądź 2500 doświadczenia łącznie jako SCP-079",
+            Requirement = "SCP079ExpierienceCollected > 2499",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[25]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Snap ",
+            Description = "Skręć 250 karków jako SCP-173",
+            Requirement = "SCP173NecksSnapped > 249",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[27]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Yoink ",
+            Description = "Złap 200 osób jako SCP-106",
+            Requirement = "SCP106Captured > 199",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[28]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Daddy, where are you?",
+            Description = "Odródź się jako SCP-049-2 50 razy",
+            Requirement = "PlayedClass10 > 49",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[29]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Got'em!",
+            Description = "Zabij 25 osób jako SCP-079",
+            Requirement = "SCP079Kills > 24",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[30]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Night Shift",
+            Description = "Jako SCP-079 wyłącz światła na 10 minut łącznie",
+            Requirement = "SCP079Blackouts > 39",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[31]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Doc, where the F*** ARE WE?",
+            Description = "Ucieknij z wymiaru łuzowego 50 razy",
+            Requirement = "PocketEscapes > 49",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[32]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "The Box Metaphor",
+            Description = "Zagraj jako każdy podmiot SCP 10 razy",
+            Requirement =
+                "PlayedClass0 > 9 && PlayedClass3 > 9 && PlayedClass5 > 9 && PlayedClass10 > 9 && PlayedClass7 > 9 && PlayedClass9 > 9 && PlayedClass16 > 9",
+            Flags = (AchievementFlag)3,
+            InOneRound = false,
+            Rank = ranks[33]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Skynet ",
+            Description = "Asystuj przy zabiciu 20 osób w jednej rundzie jako SCP-079",
+            Requirement = " SCP079Assists > 19",
+            Flags = (AchievementFlag)7,
+            InOneRound = false,
+            Rank = ranks[34]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "XK-Class Event",
+            Description = "Odblokuj wszystkie Osiągnięcia Anomalii",
+            Requirement = "true",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[37]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Mass Murderer",
+            Description = "Zabij 1000 graczy",
+            Requirement = "(KilledClass0 + KilledClass1 + KilledClass2 + KilledClass3 + KilledClass4 + KilledClass5 + KilledClass6 + KilledClass7 + KilledClass8 + KilledClass9 + KilledClass10 + KilledClass11 + KilledClass12 + KilledClass13 + KilledClass15 + KilledClass16 + KilledClass17 + KilledClass18 + KilledClass19 + KilledClass20) > 999",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[38]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Med Bay",
+            Description = "Użyj leków, apteczek oraz adrenalin łącznie 300 razy",
+            Requirement = "(UsedMedkits + UsedAdrenaline + UsedPainkillers) > 299",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[39]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Director of Heaven",
+            Description = "Zgiń 750 razy",
+            Requirement = "Deaths > 749",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[40]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "SHOW ME YOUR HANDS!",
+            Description = "Skuj łącznie 250 osób",
+            Requirement = "TimesCuffed > 249",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[41]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Hello? Anyone there?",
+            Description = "Użyj Interkomu 100 razy",
+            Requirement = "UsedIntercom > 99",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[42]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Cables. Lots of cables",
+            Description = "Uruchom 200 generatorów",
+            Requirement = "GeneratorActivated > 199",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[43]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Papers, please",
+            Description = "Otwórz 7500 drzwi",
+            Requirement = "DoorsOpened > 7499",
+            Flags = (AchievementFlag)3,
+            InOneRound = false,
+            Rank = ranks[44]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Mistaken Traveller",
+            Description = "Zagraj 1000 rund",
+            Requirement = "RoundsPlayed > 999",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[45]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Time flies, huh?",
+            Description = "Zagraj 300 godzin łącznie na serwerze",
+            Requirement =
+                "(TimePlayedClass0 + TimePlayedClass1 + TimePlayedClass2 + TimePlayedClass3 + TimePlayedClass4 + TimePlayedClass5 + TimePlayedClass6 + TimePlayedClass7 + TimePlayedClass8 + TimePlayedClass9 + TimePlayedClass10 + TimePlayedClass11 + TimePlayedClass12 + TimePlayedClass13 + TimePlayedClass15 + TimePlayedClass16 + TimePlayedClass17 + TimePlayedClass18 + TimePlayedClass19 + TimePlayedClass20) > 1080000",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[46]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "What's this?",
+            Description = " Podnieś łącznie 5000 przedmiotów",
+            Requirement = "ItemsPickedUp > 4999",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[47]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Omnipotent Entity",
+            Description = "Odródź się jako każda klasa w grze (poza Poradnikiem i obserwatorem) 30 razy",
+            Requirement = "PlayedClass0 > 29 && PlayedClass1 > 29 && PlayedClass3 > 29 && PlayedClass4 > 29 && PlayedClass5 > 29 && PlayedClass6 > 29 && PlayedClass7 > 29 && PlayedClass8 > 29 && PlayedClass9 > 29 && PlayedClass10 > 29 && PlayedClass11 > 29 && PlayedClass12 > 29 && PlayedClass13 > 29 && PlayedClass15 > 29 && PlayedClass16 > 29 && PlayedClass18 > 29 && PlayedClass19 > 29",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[48]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "The Caesar Incident",
+            Description = "Zgiń od głowicy alfa 20 razy",
+            Requirement = "KIlledByNuke > 19",
+            Flags = (AchievementFlag)7,
+            InOneRound = false,
+            Rank = ranks[49]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Lucky Boi",
+            Description =
+                "Przetrwaj rundę bez umierania (nie licząc gry jako SCP), runda musi trwać conajmniej 20 minut",
+            Requirement = "true",
+            Flags = (AchievementFlag)7,
+            InOneRound = false,
+            Rank = ranks[50]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Broken Masquerade",
+            Description = "Zdobądź wszystkie widoczne osiągnięcia",
+            Requirement = "true",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[51]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "Bureau of Control",
+            Description = "Zdobądź wszystkie ukryte osiągnięcia",
+            Requirement = "true",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[52]
+        });
+        achievements.Add(new Achievement
+        {
+            Name = "The End",
+            Description = "Zdobądź wszystkie (włączając sekretne) osiągnięcia",
+            Requirement = "true",
+            Flags = (AchievementFlag)1,
+            InOneRound = false,
+            Rank = ranks[53]
         });
         /*
          * Id;Name;Color;Rarity_Id
@@ -155,6 +898,17 @@ internal class EvoDbInitializer : CreateDatabaseIfNotExists<EvoDbContext>
         context.Rarities.AddRange(rarities);
         context.Ranks.AddRange(ranks);
         context.Achievements.AddRange(achievements);
-        base.Seed(context);
+        context.SaveChanges();
+    }
+
+    public override void InitializeDatabase(EvoDbContext context)
+    {
+        context.Database.ExecuteSqlCommand("SET NAMES 'utf8mb4';SET CHARACTER SET utf8mb4;");
+        base.InitializeDatabase(context);
+        Log.Info(context.Ranks.Count().ToString());
+        Log.Info(context.Ranks.Any().ToString());
+        if(context.Ranks.Any())
+            return;
+        Seed(context);
     }
 }
