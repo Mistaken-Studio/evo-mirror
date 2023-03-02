@@ -175,6 +175,9 @@ internal sealed class StatsCollection
     [PluginEvent(ServerEventType.PlayerLeft)]
     private void OnPlayerLeft(Player player)
     {
+        if (player?.UserId is null)
+            return;
+
         if (!PlayerStats.TryGetValue(player.UserId, out var value))
             return;
 
