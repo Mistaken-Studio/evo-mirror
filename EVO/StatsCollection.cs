@@ -181,6 +181,9 @@ internal sealed class StatsCollection
         if (!PlayerStats.TryGetValue(player.UserId, out var value))
             return;
 
+        if (player.RoleBase is null)
+            return;
+
         switch (player.Role)
         {
             case RoleTypeId.Scp173:
